@@ -1,11 +1,18 @@
 import requests
+import tkinter as tk
+
+window = tk.Tk()
+window.title = "PokeAPI"
+window.geometry("400x250")
+window.resizable(False, False)
+prompt = tk.Label(window, text="Press one of the below buttons to search for a specific thing in regards to Pokemon.", font=("Arial", 14))
+prompt.pack(pady=10)
+reverse_button = tk.Button(window, text="Search for a Pokemon", font=("Arial", 14), command=searchMon())
 
 def fetch(poke, searchfor):
     if searchfor.lower() == "pokemon":
         response = requests.get(f"https://pokeapi.co/api/v2/pokemon/{poke.lower()}")
     elif searchfor.lower() == "ability":
-        response = requests.get(f"https://pokeapi.co/api/v2/ability/{poke.lower()}")
-    elif searchfor.lower() == "item":
         response = requests.get(f"https://pokeapi.co/api/v2/ability/{poke.lower()}")
     if response.status_code != 200:
         print("Error fetching data!")
@@ -21,12 +28,16 @@ def fetch(poke, searchfor):
 
 
 def searchMon(byName):
-    if getPoke(byName) == None:
+    if fetch(byName) == None:
         print("Sorry, I couldnt find the Pokemon Specified. Did you enter the name correctly?")
     else:
-        pokemon = getPoke(byName)
+        pokemon = fetch(byName)
         for key, value in pokemon.items():
             print(f"{key.title()}: {value}")
-def searchAbility(byName)
-
-searchMon("Ditto")
+def searchAbility(byName):
+    if fetch(byName, "ability") == None:
+        print("Sorry, I couldnt find the Ability Specified. Did you enter the name correctly?")
+    else:
+        abil = fetch(byName, "ability")
+        for key, value in abil.items():
+            print(f"{key.title()}: {value}")
