@@ -1,7 +1,12 @@
 import requests
 
-def getPoke(poke):
-    response = requests.get(f"https://pokeapi.co/api/v2/pokemon/{poke.lower()}")
+def fetch(poke, searchfor):
+    if searchfor.lower() == "pokemon":
+        response = requests.get(f"https://pokeapi.co/api/v2/pokemon/{poke.lower()}")
+    elif searchfor.lower() == "ability":
+        response = requests.get(f"https://pokeapi.co/api/v2/ability/{poke.lower()}")
+    elif searchfor.lower() == "item":
+        response = requests.get(f"https://pokeapi.co/api/v2/ability/{poke.lower()}")
     if response.status_code != 200:
         print("Error fetching data!")
         return None
@@ -20,8 +25,8 @@ def searchMon(byName):
         print("Sorry, I couldnt find the Pokemon Specified. Did you enter the name correctly?")
     else:
         pokemon = getPoke(byName)
-        for key, value in pokemon.items:
-            print({key.title()}) ## continue here
-
+        for key, value in pokemon.items():
+            print(f"{key.title()}: {value}")
+def searchAbility(byName)
 
 searchMon("Ditto")
