@@ -1,14 +1,38 @@
-password = None
-email = input("Please enter your email. >>>")
-
-def validateEmail(input):
-    input.strip(" ")
-    if input.find("@") == -1:
+def funct():
+    
+    emailValidated = False
+    email.strip(" ")
+    if type is True:
+        print("Your email is not valid! Email must be a string.")
+        email = None
+        return "invalid"
+    elif email.find("@") == -1:
         print("Your email is not valid!  Must contain an @ symbol.")
+        email = None
         return "invalid"
     else:
-        print(f"Email validated: {input}")
-        return "valid"
+        print(f"Email validated: {email}")
+        emailValidated = True    
+    upperCheck = False
+    numCheck = False
+    letterCheck = 0
+    password = input(">>>")
+    for i in password:
+        if i.isupper == True:
+            print("Uppercase check OKAY")
+            upperCheck = True
+        if i.isdigit == True:
+            print("Num check OKAY")
+            numCheck = True
+        letterCount += 1
+    if letterCount <= 8:
+        print("Your password is not valid! Must be atleast 8 characters in length.")
+        return "invalid"
 
-if validateEmail(email) == "invalid":
-    exec(email)
+
+password = None    
+email = None
+
+
+
+    
