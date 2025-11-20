@@ -3,11 +3,12 @@ import tkinter as tk
 
 window = tk.Tk()
 window.title("PokeAPI")
-window.geometry("400x250")
-window.resizable(False, False)
+window.geometry("700x700")
+window.resizable(True, True) ## window stuff
+
 prompt = tk.Label(window, 
                   text="Press one of the below buttons to search for something Pokemon-related!!", 
-                  font=("Arial", 14))
+                  font=("Arial", 14)) ## gives information on the application to user
 prompt.pack(pady=10)
 logLabel = tk.Label(window,
                     text=" ",
@@ -17,12 +18,12 @@ searchContinue = tk.Button(window,
                          text="Search Abils / Mons", 
                          font=("Arial", 14), 
                          relief="raised", 
-                         command=lambda:find())
+                         command=lambda:find()) ## button that the user presses to initiate the search
 searchContinue.pack(pady=11)
 search = tk.Entry(window,
                   font=("Arial", 14), 
-                  width=40)
-
+                  width=40) ## where user types in the pokemon / ability they want to search for
+search.pack(pady=)
 window.mainloop()
 
 
@@ -43,21 +44,8 @@ def fetch(poke, searchfor):
         "types": [t["type"]["name"] for t in data["types"]]
     }
 def find(input):
-    findPoke = Search.Pokemon(input)
-    findAbil = Search.Ability(input)
+    findPoke = fetch(input, "pokemon")
+    findAbil = fetch(input, "ability")
     if findPoke and findAbil == None:
         logLabel.config(text="Error! Could not find what you were looking for in neither database.")
         
-class Search:
-    def Pokemon(byName):
-        if fetch(byName, "pokemon") == None:
-            print("Couldnt find: Pokemon")
-            return None
-        else:
-            return fetch(byName)
-    def Ability(byName):
-        if fetch(byName, "ability") == None:
-            print("Couldnt find: Ability")
-            return None
-        else:
-            return fetch(byName, "ability")
