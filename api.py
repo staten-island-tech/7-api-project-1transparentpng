@@ -4,36 +4,50 @@ import platform
 headers = {
     'User-Agent': f"OS: {platform.system()} {platform.release()} {platform.version()}"
 }
+pluginList = []
 print(headers)
 def find():
+    pluginList = [] ## clears the plugin list
     address = search.get().lower()
+    print(f">> >{address}<")
+    if address == "":
+        print("No Address Specified!")
+        logLabel.config(text="You did not specify a server address!")
+        return
+    elif address. ## continue here
     print(f"Address Provided: {address}")
     response = requests.get(url=f"https://api.mcsrvstat.us/3/{address.lower()}", 
                             headers=headers)
+    print(response.status_code)
     if response.status_code == 403:
         print("Error fetching data! 403")
         logLabel.config(text="An error occured: 403 Forbidden")
-    else:
+    elif response.status_code == 200:
         print("Successfully got data")
         logLabel.config(text=f"Successfully got Data of {address.lower()}!")
+    elif response.status_code == 404:
+        print(f"Could not find {address}, 404")
+        logLabel.config(text=f"Could not find the specified Server Address. Did you type it correctly?")
+    else:
+        print(f"An Error Occured: {response.status_code}")
+        logLabel.config(text=f"An error occured: {response.status_code}")
     data = response.json()
     print(data)
     if data["online"] == True:
         isOnline.config(text="Online: YES")
         serverVersion.config(text=f"Server Version: {data["version"]}")
         serverSoftware.config(text=f"Server Software: {data["software"]}")
-        return {
-            "ip": data["ip"],
-            "online": data["online"],
-            "ver": data["version"],
-            "software": data["software"], 
-            "maxplyrs": data["players"]["max"],
-            "onlineplyrs": data["players"]["online"], ## for dict lists, do data['players']['list'][1]['name']   
-        }
+        serverPlayers.config(text=f"Players: {data["players"]["online"]} / {data["players"]["max"]}")       
+        for i in data["plugins"]:
+            pluginList.append(i["name"]) 
+            print(f"found plugin {i["name"]}, appending to list")
+        serverPlugins.config(text=f"Installed Plugins: {pluginList}")
     else:
-        return {
-            "online": data["online"]
-        }
+        isOnline.config(text="Online: NO")
+        serverVersion.config(text=f"Server Version: N/A")
+        serverSoftware.config(text=f"Server Software: N/A")
+        serverPlayers.config(text="Players: ? / ?")
+        serverPlugins.config(text=f"Installed Plugins: N/A")
 
 window = tk.Tk()
 window.title("MC:J Server Status")
@@ -70,9 +84,15 @@ serverSoftware = tk.Label(window,
                           text="Server Software: N/A",
                           font=("Arial", 10))
 serverSoftware.pack(pady=1)
+serverPlugins = tk.Label(window,
+                         text="Installed Plugins: N/A",
+                         font=("Arial", 10),
+                         wraplength=400)
+serverPlugins.pack(pady=1)
 serverPlayers = tk.Label(window,
                          text="Players: ? / ?",
-                         font=("Arial", 10))
+                         font=("Arial", 10),
+                         width=60)
 serverPlayers.pack(pady=1)
 window.mainloop()
 
