@@ -4,20 +4,22 @@ import platform
 headers = {
     'User-Agent': f"OS: {platform.system()} {platform.release()} {platform.version()}"
 }
-pluginList = []
 print(headers)
+
 def find():
-    pluginList = [] ## clears the plugin list
     address = search.get().lower()
     print(f">> >{address}<")
     if address == "":
         print("No Address Specified!")
         logLabel.config(text="You did not specify a server address!")
         return
-    elif address. ## continue here
+    elif "." not in address:
+        print("Invalid address detected!")
+        logLabel.config(text="The specified server address is invalid!")
+        return
     print(f"Address Provided: {address}")
-    response = requests.get(url=f"https://api.mcsrvstat.us/3/{address.lower()}", 
-                            headers=headers)
+    response = requests.get(url=f"https://api.mcsrvstat.us/3/{address.lower()}", headers=headers)
+    servericon = requests.get(url=f"https://api.mcsrvstat.us/icon/{address.lower()}", headers=headers)
     print(response.status_code)
     if response.status_code == 403:
         print("Error fetching data! 403")
@@ -37,17 +39,13 @@ def find():
         isOnline.config(text="Online: YES")
         serverVersion.config(text=f"Server Version: {data["version"]}")
         serverSoftware.config(text=f"Server Software: {data["software"]}")
-        serverPlayers.config(text=f"Players: {data["players"]["online"]} / {data["players"]["max"]}")       
-        for i in data["plugins"]:
-            pluginList.append(i["name"]) 
-            print(f"found plugin {i["name"]}, appending to list")
-        serverPlugins.config(text=f"Installed Plugins: {pluginList}")
+        serverPlayers.config(text=f"Players: {data["players"]["online"]} / {data["players"]["max"]}")  
+        logo.config(file=servericon)     
     else:
         isOnline.config(text="Online: NO")
         serverVersion.config(text=f"Server Version: N/A")
         serverSoftware.config(text=f"Server Software: N/A")
         serverPlayers.config(text="Players: ? / ?")
-        serverPlugins.config(text=f"Installed Plugins: N/A")
 
 window = tk.Tk()
 window.title("MC:J Server Status")
@@ -72,6 +70,10 @@ logLabel = tk.Label(window,
                     text="Test",
                     font=( "Arial", 12)) ## this tells the user if the search was successful or failed, as well as misc. errors
 logLabel.pack(pady=10)
+logo = tk.PhotoImage(window,
+                     height=64,
+                     width=64,
+                    )
 isOnline = tk.Label(window,
                     text="Online: N/A",
                     font=("Arial", 10)) ## set to N/A as default, will change after a sucessful search
@@ -84,11 +86,6 @@ serverSoftware = tk.Label(window,
                           text="Server Software: N/A",
                           font=("Arial", 10))
 serverSoftware.pack(pady=1)
-serverPlugins = tk.Label(window,
-                         text="Installed Plugins: N/A",
-                         font=("Arial", 10),
-                         wraplength=400)
-serverPlugins.pack(pady=1)
 serverPlayers = tk.Label(window,
                          text="Players: ? / ?",
                          font=("Arial", 10),
