@@ -5,7 +5,6 @@ headers = {
     'User-Agent': f"OS: {platform.system()} {platform.release()} {platform.version()}"
 }
 print(headers)
-
 def find():
     address = search.get().lower()
     print(f">> >{address}<")
@@ -44,7 +43,6 @@ def find():
         serverVersion.config(text=f"Server Version: N/A")
         serverSoftware.config(text=f"Server Software: N/A")
         serverPlayers.config(text="Players: ? / ?")
-
 window = tk.Tk()
 window.title("MC:J Server Status")
 window.geometry("700x700")
