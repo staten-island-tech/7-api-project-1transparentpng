@@ -45,42 +45,42 @@ def find():
         serverPlayers.config(text="Players: ? / ?")
 window = tk.Tk()
 window.title("MC:J Server Status")
-window.geometry("700x700")
-window.resizable(True, True) ## window stuff
+window.geometry("400x400")
+window.resizable(False, False) ## window stuff
 
 prompt = tk.Label(window, 
                   text="Java Server Address:", 
-                  font=("Arial", 12))
+                  font=("Bahnschrift", 16))
 prompt.pack(pady=2)
 search = tk.Entry(window,
-                  font=("Arial", 12), 
+                  font=("Bahnschrift", 14), 
                   width=40) ## where user types in the server address they want to search for
 search.pack(pady=1)
 searchContinue = tk.Button(window, 
                          text="Search", 
-                         font=("Arial", 14), 
+                         font=("Bahnschrift", 14), 
                          relief="raised", 
                          command=lambda:find()) ## button that the user presses to initiate the search
 searchContinue.pack(pady=2)
 logLabel = tk.Label(window,
                     text="Test",
-                    font=( "Arial", 12)) ## this tells the user if the search was successful or failed, as well as misc. errors
+                    font=( "Bahnschrift", 12)) ## this tells the user if the search was successful or failed, as well as misc. errors
 logLabel.pack(pady=10)
 isOnline = tk.Label(window,
                     text="Online: N/A",
-                    font=("Arial", 10)) ## set to N/A as default, will change after a sucessful search
+                    font=("Bahnschrift", 12)) ## set to N/A as default, will change after a sucessful search
 isOnline.pack(pady=1)
 serverVersion = tk.Label(window,
                          text="Server Version: N/A",
-                         font=("Arial", 10))
+                         font=("Bahnschrift", 12))
 serverVersion.pack(pady=1)
 serverSoftware = tk.Label(window,
                           text="Server Software: N/A",
-                          font=("Arial", 10))
+                          font=("Bahnschrift", 12))
 serverSoftware.pack(pady=1)
 serverPlayers = tk.Label(window,
                          text="Players: ? / ?",
-                         font=("Arial", 10),
+                         font=("Bahnschrift", 12),
                          width=60)
 serverPlayers.pack(pady=1)
 window.mainloop()
