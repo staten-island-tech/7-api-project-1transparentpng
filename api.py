@@ -45,7 +45,7 @@ def find():
         serverPlayers.config(text="Players: ? / ?")
 window = tk.Tk()
 window.title("MC:J Server Status")
-window.geometry("400x400")
+window.geometry("600x400")
 window.resizable(False, False) ## window stuff
 
 prompt = tk.Label(window, 
@@ -63,7 +63,7 @@ searchContinue = tk.Button(window,
                          command=lambda:find()) ## button that the user presses to initiate the search
 searchContinue.pack(pady=2)
 logLabel = tk.Label(window,
-                    text="Test",
+                    text="Enter a java server address to see information about a server!",
                     font=( "Bahnschrift", 12)) ## this tells the user if the search was successful or failed, as well as misc. errors
 logLabel.pack(pady=10)
 isOnline = tk.Label(window,
