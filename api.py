@@ -5,7 +5,7 @@ headers = {
     'User-Agent': f"OS: {platform.system()} {platform.release()} {platform.version()}"
 }
 print(headers)
-def find():
+def findServer():
     address = search.get().lower()
     print(f">> >{address}<")
     if address == "":
@@ -43,11 +43,13 @@ def find():
         serverVersion.config(text=f"Server Version: N/A")
         serverSoftware.config(text=f"Server Software: N/A")
         serverPlayers.config(text="Players: ? / ?")
+
 window = tk.Tk()
 window.title("MC:J Server Status")
 window.geometry("600x400")
 window.resizable(False, False) ## window stuff
 
+## MC Server Status API -----
 prompt = tk.Label(window, 
                   text="Java Server Address:", 
                   font=("Bahnschrift", 16))
@@ -84,6 +86,6 @@ serverPlayers = tk.Label(window,
                          width=60)
 serverPlayers.pack(pady=1)
 window.mainloop()
-
+## -------------------------
 
         
